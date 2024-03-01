@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "registerwindow.h"
+#include "Users.h"
 #include "welcomewindow.h"
 
 
@@ -19,6 +20,11 @@ class LoginWindow : public QMainWindow
 public:
     explicit LoginWindow(QWidget *parent = nullptr);
     ~LoginWindow();
+
+private slots:
+    void on_pushButtonReg_clicked();
+
+    void on_pushButtonLog_clicked();
 
 private:
     Ui::LoginWindow *ui;

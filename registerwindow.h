@@ -16,6 +16,10 @@ public:
     explicit RegisterWindow(QWidget *parent = nullptr);
     ~RegisterWindow();
 
+private slots:
+    void on_pushButtonReg_clicked();
+    int calculateAge(int year);
+
 private:
     Ui::RegisterWindow *ui;
 };
