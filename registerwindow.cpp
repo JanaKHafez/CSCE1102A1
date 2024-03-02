@@ -22,11 +22,15 @@ RegisterWindow::~RegisterWindow()
 
 void RegisterWindow::on_pushButtonReg_clicked()
 {
-
-
+    bool v = true;
+    ui->labelUserErr->setVisible(false);
+    ui->labelPassErr->setVisible(false);
+    ui->labelDOBerr->setVisible(false);
+    ui->labelRegErr->setVisible(false);
     QString username = ui->lineEditUser->text();
     QString password = ui->lineEditPass->text();
     QString retypePassword = ui->lineEditRetype->text();
+    QString day = ui->lineEditDay->text();
     QString month = ui->comboBoxMonth->currentText();
     QString yearStr = ui->lineEditYear->text();
     QString gender = ui->radioButtonM->isChecked() ? "Male" : "Female";
@@ -45,9 +49,8 @@ void RegisterWindow::on_pushButtonReg_clicked()
     if (ui->checkBoxOther->isChecked())
         genres.append("Other");
 
-    if (username.isEmpty() || password.isEmpty() || retypePassword.isEmpty() || month.isEmpty() || genres.isEmpty()) {
+    if (username.isEmpty() || password.isEmpty() || retypePassword.isEmpty() || day.isEmpty() || month.isEmpty() || yearStr.isEmpty() || gender.isEmpty() || accountType.isEmpty() || genres.isEmpty()) {
         ui->labelRegErr->setVisible(true);
-        ui->labelRegErr->setText("All fields must be filled");
     } else {
         bool usernameExists = false;
         for (int i = 0; i < usersCount; ++i) {
@@ -58,17 +61,17 @@ void RegisterWindow::on_pushButtonReg_clicked()
         }
         if (usernameExists) {
             ui->labelUserErr->setVisible(true);
-            ui->labelUserErr->setText("Username already exists");
-        } else if (password != retypePassword) {
+            v = false;
+        } if (password != retypePassword) {
             ui->labelPassErr->setVisible(true);
-            ui->labelPassErr->setText("Passwords do not match");
-        } else if (calculateAge(month.toInt()) < 12) {
+            v = false;
+        } if (calculateAge(yearStr.toInt()) < 12) {
             ui->labelDOBerr->setVisible(true);
-            ui->labelDOBerr->setText("Age is less than 12");
-        } else {
+            v = false;
+        } if(v) {
             usernames[usersCount] = username;
             passwords[usersCount] = password;
-            ages[usersCount] = calculateAge(month.toInt());
+            ages[usersCount] = calculateAge(yearStr.toInt());
             usersCount++;
 
             WelcomeWindow *welcomeWindow = new WelcomeWindow(username, ages[usersCount - 1]);
@@ -80,5 +83,5 @@ void RegisterWindow::on_pushButtonReg_clicked()
 
 int RegisterWindow::calculateAge(int year)
 {
-    return QDate::currentDate().year() - year;
+    return (QDate::currentDate().year() - year);
 }
