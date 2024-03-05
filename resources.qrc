@@ -1,5 +1,6 @@
 <RCC>
-    <qresource prefix="/C:\Users\seifa\OneDrive\Documents\CinemaProject\CSCE1102A1">
+    <qresource prefix="/images"/>
+    <qresource prefix="/">
         <file>welcomeImage.jpg</file>
     </qresource>
 </RCC>
